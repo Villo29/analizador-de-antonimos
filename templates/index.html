@@ -3,34 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Analizador Léxico Web</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        #inputText {
-            width: 100%;
-            height: 100px;
-        }
-        #analyzeButton {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
     <h1>Analizador Léxico Web</h1>
@@ -49,7 +23,6 @@
             </tr>
         </thead>
         <tbody id="resultsTable">
-            <!-- Los resultados se mostrarán aquí -->
         </tbody>
     </table>
     <script>
