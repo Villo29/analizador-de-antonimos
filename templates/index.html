@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Léxico Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        #inputText {
+            width: 100%;
+            height: 100px;
+        }
+        #analyzeButton {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Analizador Léxico Web</h1>
+    <p>Crear un analizador léxico que permita reemplazar palabras de diccionario de sinónimos; en caso de no encontrar dejar la palabra original, por lo menos de contar con 50 sinónimos.</p>
+    <textarea id="inputText" placeholder="Ingrese texto aquí..."></textarea><br>
+    <button id="analyzeButton">Analizar</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Cadena de entrada</th>
+                <th>Cadena resultante</th>
+                <th>Palabras cambiadas</th>
+                <th>Números</th>
+                <th>Símbolos</th>
+                <th>Línea</th>
+            </tr>
+        </thead>
+        <tbody id="resultsTable">
+            <!-- Los resultados se mostrarán aquí -->
+        </tbody>
+    </table>
+    <script>
+        document.getElementById('analyzeButton').addEventListener('click', async () => {
+            const inputText = document.getElementById('inputText').value;
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: inputText }),
+            });
+            const result = await response.json();
+            const resultsTable = document.getElementById('resultsTable');
+            resultsTable.innerHTML = '';
+            result.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.input}</td>
+                    <td>${row.output}</td>
+                    <td>${row.changed}</td>
+                    <td>${row.number}</td>
+                    <td>${row.symbol}</td>
+                    <td>${index + 1}</td>
+                `;
+                resultsTable.appendChild(tr);
+            });
+        });
+    </script>
+</body>
+</html>
